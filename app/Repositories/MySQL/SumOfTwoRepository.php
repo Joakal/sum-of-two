@@ -10,7 +10,7 @@ class SumOfTwoRepository implements SumOfTwoInterface
     public function callProc($number)
     {
 
-        $result = \DB::connection('mysql')->SELECT('CALL sumoftwo(?)', [$number]);
+        $result = \DB::connection('mysql')->SELECT('CALL sumoftwoproc(?)', [$number]);
 
 
         if ($result[0]->result) {

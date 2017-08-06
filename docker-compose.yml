@@ -1,0 +1,48 @@
+version: '2'
+
+volumes:
+    database_data:
+        driver: local
+
+services:
+  nginx:
+      build:
+        context: .
+        dockerfile: web.dockerfile
+      ports:
+          - 8080:80
+      links:
+          - php
+  php:
+      build:
+        context: .
+        dockerfile: app.dockerfile
+      expose:
+          - 9000
+      environment:
+          - "DB_HOST=mongodb"
+          - "DB_PORT=27017"
+          - "MYSQL_HOST=mysql"
+          - "MYSQL_PORT=3306"
+          - "MYSQL_USERNAME=project"
+          - "MYSQL_PASSWORD=secret"
+      links:
+          - mongodb
+          - mysql
+  mysql:
+      image: mysql:5.7.19
+      expose:
+          - 3306
+      volumes:
+          - database_data:/var/lib/mysql
+      environment:
+          MYSQL_ROOT_PASSWORD: rootsecret
+          MYSQL_DATABASE: sumoftwo
+          MYSQL_USER: project
+          MYSQL_PASSWORD: secret
+  mongodb:
+      image: mongo:3.4.6
+      expose:
+        - 27017
+      volumes:
+        - /srv/docker/mongodb:/var/lib/mongodb

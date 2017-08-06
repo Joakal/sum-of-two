@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sumoftwo`(IN numb INT)
+CREATE PROCEDURE `sumoftwoproc`(IN numb INT)
 BEGIN
     DECLARE cubeRoot FLOAT;
     DECLARE yCube DOUBLE;
@@ -28,7 +28,7 @@ BEGIN
 		LEAVE label1;
 
 	END LOOP label1;
-      
+
 	SELECT @result as result;
 
 END

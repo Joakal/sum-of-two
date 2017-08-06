@@ -1,26 +1,24 @@
-## About Sum Of Two
+# Sum Of Two
 
-A project developed to answer the task of determining whether a number is a sum of two cubes with a variety of languages. For example, browse towards to see. http://sum.joakal.com/
-
+A project developed to answer the task of determining whether a number is a sum of two cubes with a variety of languages. For example, browse towards to see.
 This project currently supports the following languages:
-JavaScript
-PHP
-MongoDB
-MySQL
+- JavaScript
+- PHP
+- MongoDB
+- MySQL
 
 ## Requirements
 
-MongoDB 3.4.5 or higher
-PHP 7.0.18 or higher
-Composer 1.4.2 or higher
-MySQL 14.14 or heigher
+Docker 17.06
 
-## Installatioin
+## Installation
 
-composer update
-php artisan db:seed
-
-Note: To use the MySQL Store procedure, load the sumoftwo.sql into MySQL DB.
+```
+docker-compose up -d
+docker-compose exec php php artisan migrate
+docker-compose exec php php artisan db:seed
+```
+Navigate to http://localhost:8080/
 
 ## License
 
@@ -29,5 +27,9 @@ This project is open-sourced software licensed under the [MIT license](http://op
 ## Bugs
 
 Migration issue with mongodb. The following doesn't work. Active MongoDB issue.
+```
 Schema::dropIfExists('');
+```
 https://github.com/jenssegers/laravel-mongodb/issues/1201
+
+MySQL does not allow cubic roots and it affects the calulations (ie 91 returns false instead of true). Performing POW(27,1/3) returns '2.9999999999999667'.
